@@ -15,14 +15,21 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Strings for component 'tool_carcastc', language 'en'
+ * Page API
  *
  * @package   tool_carcastc
  * @copyright 2021, Carlos Castillo <carlos.castillo@moodle.com>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
+require_once(__DIR__ . '/../../../config.php');
 
-$string['pluginname'] = 'My first Moodle plugin';
-$string['helloworld'] = 'Hello World';
+$url = new moodle_url('/admin/tool/carcastc/index.php');
+
+$PAGE->set_context(context_system::instance());
+$PAGE->set_url($url);
+$PAGE->set_pagelayout('report');
+$PAGE->set_title('Hello world page');
+$PAGE->set_heading(get_string('pluginname', 'tool_carcastc'));
+
+echo get_string('helloworld', 'tool_carcastc');
