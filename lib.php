@@ -24,7 +24,14 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-
+/**
+ * Extend course navigation to this plugins
+ *
+ * @param navigation_node $navigation The navigation node to extend
+ * @param stdClass $course Course object
+ * @param context $context The context of the course
+ * @return void|null return null if we don't want to display the node.
+ */
 function tool_carcastc_extend_navigation_course($navigation, $course, $context) {
     $navigation->add(
             get_string('pluginname', 'tool_carcastc'),
