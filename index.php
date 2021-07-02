@@ -26,10 +26,10 @@ require_once(__DIR__ . '/../../../config.php');
 
 $id = required_param('id', PARAM_INT);
 
-// Pass argument to query string
+// Pass argument to query string.
 $url = new moodle_url('/admin/tool/carcastc/index.php', ['id' => $id]);
 
-// Set most used strings in variable
+// Set most used strings in variable.
 $pnstring = get_string('pluginname', 'tool_carcastc');
 $hwstring = get_string('helloworld', 'tool_carcastc');
 
@@ -46,7 +46,7 @@ echo $OUTPUT->heading($hwstring);
 
 echo html_writer::div($hwstring);
 
-// Pass parameter to language string
+// Pass parameter to language string.
 echo html_writer::div(get_string('youareviewing', 'tool_carcastc', $id));
 
 echo $OUTPUT->footer();
