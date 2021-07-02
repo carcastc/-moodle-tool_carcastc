@@ -41,12 +41,16 @@ $PAGE->set_pagelayout('report');
 $PAGE->set_title($hwstring);
 $PAGE->set_heading($pnstring);
 
+// Count users registered in moodle.
+$userscount = $DB->count_records('user');
+
+// Get info course based on id param.
+$courseinfo = $DB->get_record('course', ['id' => $id]);
+
 echo $OUTPUT->header();
 echo $OUTPUT->heading($hwstring);
 
-echo html_writer::div($hwstring);
-
 // Pass parameter to language string.
-echo html_writer::div(get_string('youareviewing', 'tool_carcastc', $id));
+echo html_writer::div(get_string('youareviewing', 'tool_carcastc', ['userscount' => $userscount, 'coursename' => $courseinfo->fullname]));
 
 echo $OUTPUT->footer();
