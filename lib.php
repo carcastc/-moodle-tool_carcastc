@@ -15,38 +15,22 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Page API
+ * Extending plugin tool_carcastc functions
  *
  * @package   tool_carcastc
  * @copyright 2021, Carlos Castillo <carlos.castillo@moodle.com>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-require_once(__DIR__ . '/../../../config.php');
+defined('MOODLE_INTERNAL') || die();
 
-$id = required_param('id', PARAM_INT);
 
-// Pass argument to query string
-$url = new moodle_url('/admin/tool/carcastc/index.php', ['id' => $id]);
-
-// Set most used strings in variable
-$pnstring = get_string('pluginname', 'tool_carcastc');
-$hwstring = get_string('helloworld', 'tool_carcastc');
-
-$PAGE->set_context(context_system::instance());
-
-$PAGE->set_url($url);
-
-$PAGE->set_pagelayout('report');
-$PAGE->set_title($hwstring);
-$PAGE->set_heading($pnstring);
-
-echo $OUTPUT->header();
-echo $OUTPUT->heading($hwstring);
-
-echo html_writer::div($hwstring);
-
-// Pass parameter to language string
-echo html_writer::div(get_string('youareviewing', 'tool_carcastc', $id));
-
-echo $OUTPUT->footer();
+function tool_carcastc_extend_navigation_course($navigation, $course, $context) {
+    $navigation->add(
+            get_string('pluginname', 'tool_carcastc'),
+            new moodle_url('/admin/tool/carcastc/index.php', ['id' => $course->id]),
+            navigation_node::TYPE_SETTING,
+            get_string('pluginname', 'tool_carcastc'),
+            'carcastc',
+            new pix_icon('icon', '', 'tool_carcastc'));
+}
