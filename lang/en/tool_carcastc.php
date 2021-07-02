@@ -26,3 +26,4 @@ defined('MOODLE_INTERNAL') || die();
 
 $string['pluginname'] = 'My first Moodle plugin';
 $string['helloworld'] = 'Hello World';
+$string['youareviewing'] = 'You are viewing course id {$a}';

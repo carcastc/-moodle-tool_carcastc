@@ -24,12 +24,22 @@
 
 require_once(__DIR__ . '/../../../config.php');
 
+//this method execute the clean_param
+$id = optional_param('id', 0, PARAM_INT);
+
 $url = new moodle_url('/admin/tool/carcastc/index.php');
+
 
 $PAGE->set_context(context_system::instance());
 $PAGE->set_url($url);
 $PAGE->set_pagelayout('report');
-$PAGE->set_title('Hello world page');
+$PAGE->set_title(get_string('helloworld', 'tool_carcastc'));
 $PAGE->set_heading(get_string('pluginname', 'tool_carcastc'));
 
-echo get_string('helloworld', 'tool_carcastc');
+echo $OUTPUT->header();
+echo $OUTPUT->heading(get_string('helloworld', 'tool_carcastc'));
+
+echo html_writer::div(get_string('helloworld', 'tool_carcastc'));
+echo html_writer::div(get_string('youareviewing', 'tool_carcastc', $id));
+
+echo $OUTPUT->footer();
