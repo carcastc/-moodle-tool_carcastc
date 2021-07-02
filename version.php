@@ -16,7 +16,7 @@
 
 /**
  * Version information
- *
+
  * @package   tool_carcastc
  * @copyright 2021, Carlos Castillo <carlos.castillo@moodle.com>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -24,8 +24,8 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version    = 2021300603; // The current plugin version (Date: YYYYMMDDXX).
+$plugin->version    = 2021300604; // The current plugin version (Date: YYYYMMDDXX).
 $plugin->requires   = 2021051700; // Requires this Moodle version.
 $plugin->component  = 'tool_carcastc'; // Full name of the plugin (used for diagnostics).
 $plugin->maturity   = MATURITY_STABLE; // Maturity.
-$plugin->release    = '1.3';     // Release name.
+$plugin->release    = '1.4';     // Release name.
