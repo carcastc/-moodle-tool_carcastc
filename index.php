@@ -24,7 +24,6 @@
 
 require_once(__DIR__ . '/../../../config.php');
 
-//this method execute the clean_param
 $id = optional_param('id', 0, PARAM_INT);
 
 $url = new moodle_url('/admin/tool/carcastc/index.php');
