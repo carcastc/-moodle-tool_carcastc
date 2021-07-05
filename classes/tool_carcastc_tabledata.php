@@ -137,13 +137,17 @@ class tool_carcastc_tabledata extends \table_sql {
      * @param bool $useinitialsbar do you want to use the initials bar. Bar
      * will only be used if there is a fullname column defined for the table.
      */
-    public function query_db($pagesize, $useinitialsbar = false) {
+    public function query_db($pagesize, $useinitialsbar = true) {
         global $DB;
 
         $total = $DB->count_records('tool_carcastc');
         $this->pagesize($pagesize, $total);
         $this->rawdata = $this->get_rows_table();
 
+        // Set initial bars.
+        if ($useinitialsbar) {
+            $this->initialbars($total > $pagesize);
+        }
     }
 
     /**
@@ -156,7 +160,7 @@ class tool_carcastc_tabledata extends \table_sql {
 
         $sql = "SELECT tc.id, c.fullname as coursename, tc.name, tc.completed, tc.priority, tc.timecreated, tc.timemodified
                 FROM {tool_carcastc} tc
-                JOIN {course} c ON c.id = tc.courseid 
+                JOIN {course} c ON c.id = tc.courseid
                 WHERE tc.courseid = ? ";
 
         return $DB->get_records_sql($sql, [$this->courseid]);

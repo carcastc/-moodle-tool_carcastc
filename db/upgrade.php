@@ -22,7 +22,7 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-function xmldb_tool_carcastc_upgrade($oldversion){
+function xmldb_tool_carcastc_upgrade($oldversion) {
     global $DB;
 
     $dbman = $DB->get_manager();
@@ -80,6 +80,5 @@ function xmldb_tool_carcastc_upgrade($oldversion){
         // Carcastc savepoint reached.
         upgrade_plugin_savepoint(true, 2021300605, 'tool', 'carcastc');
     }
-
     return true;
 }
