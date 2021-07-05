@@ -44,6 +44,18 @@ function xmldb_tool_carcastc_upgrade($oldversion) {
         // Adding keys to table tool_carcastc.
         $table->add_key('primary', XMLDB_KEY_PRIMARY, ['id']);
 
+        $key = new xmldb_key('courseid', XMLDB_KEY_FOREIGN, ['courseid'], 'course', ['id']);
+
+        // Launch add key courseid.
+        $dbman->add_key($table, $key);
+
+        $index = new xmldb_index('uicourseidname', XMLDB_INDEX_UNIQUE, ['courseid', 'name']);
+
+        // Conditionally launch add index uicourseidname.
+        if (!$dbman->index_exists($table, $index)) {
+            $dbman->add_index($table, $index);
+        }
+
         // Conditionally launch create table for tool_carcastc.
         if (!$dbman->table_exists($table)) {
             $dbman->create_table($table);
@@ -53,32 +65,5 @@ function xmldb_tool_carcastc_upgrade($oldversion) {
         upgrade_plugin_savepoint(true, 2021300605, 'tool', 'carcastc');
     }
 
-    if ($oldversion < 2021300605) {
-
-        // Define key courseid (foreign) to be added to tool_carcastc.
-        $table = new xmldb_table('tool_carcastc');
-        $key = new xmldb_key('courseid', XMLDB_KEY_FOREIGN, ['courseid'], 'course', ['id']);
-
-        // Launch add key courseid.
-        $dbman->add_key($table, $key);
-
-        // Carcastc savepoint reached.
-        upgrade_plugin_savepoint(true, 2021300605, 'tool', 'carcastc');
-    }
-
-    if ($oldversion < 2021300605) {
-
-        // Define index uicourseidname (unique) to be added to tool_carcastc.
-        $table = new xmldb_table('tool_carcastc');
-        $index = new xmldb_index('uicourseidname', XMLDB_INDEX_UNIQUE, ['courseid', 'name']);
-
-        // Conditionally launch add index uicourseidname.
-        if (!$dbman->index_exists($table, $index)) {
-            $dbman->add_index($table, $index);
-        }
-
-        // Carcastc savepoint reached.
-        upgrade_plugin_savepoint(true, 2021300605, 'tool', 'carcastc');
-    }
     return true;
 }
