@@ -25,5 +25,14 @@
 defined('MOODLE_INTERNAL') || die();
 
 $string['pluginname'] = 'My first Moodle plugin';
+$string['coursenotfound'] = 'Course not found!';
 $string['helloworld'] = 'Hello World';
 $string['youareviewing'] = 'The course name is {$a->coursename} and there are in moodle {$a->userscount} user(s) registered';
+
+// Table columns
+$string['coursename'] = 'Course fullname';
+$string['name'] = 'Name';
+$string['completed'] = 'Completed';
+$string['priority'] = 'Priority';
+$string['timecreated'] = 'Created at';
+$string['timemodified'] = 'Modified at';

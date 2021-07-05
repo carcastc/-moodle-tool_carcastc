@@ -45,12 +45,18 @@ $PAGE->set_heading($pnstring);
 $userscount = $DB->count_records('user');
 
 // Get info course based on id param.
-$courseinfo = $DB->get_record('course', ['id' => $id]);
+$courseinfo = $DB->get_record_sql("SELECT fullname FROM {course} WHERE id = ?", [$id]);
 
 echo $OUTPUT->header();
 echo $OUTPUT->heading($hwstring);
 
 // Pass parameter to language string.
-echo html_writer::div(get_string('youareviewing', 'tool_carcastc', ['userscount' => $userscount, 'coursename' => $courseinfo->fullname]));
+echo html_writer::div(get_string('youareviewing', 'tool_carcastc',
+        ['userscount' => $userscount, 'coursename' =>
+        html_writer::span($courseinfo->fullname ?? get_string('coursenotfound', 'tool_carcastc'), 'font-weight-bold')]));
+
+// Show tool_carcastc table rows.
+$tablesql = new  \tool_carcastc\tool_carcastc_tabledata('tool_carcastc', $id);
+$tablesql->out(0, false);
 
 echo $OUTPUT->footer();
