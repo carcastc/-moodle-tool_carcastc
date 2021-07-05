@@ -63,7 +63,7 @@ function xmldb_tool_carcastc_upgrade($oldversion){
         $dbman->add_key($table, $key);
 
         // Carcastc savepoint reached.
-        upgrade_plugin_savepoint(true, XXXXXXXXXX, 'tool', 'carcastc');
+        upgrade_plugin_savepoint(true, 2021300605, 'tool', 'carcastc');
     }
 
     if ($oldversion < 2021300605) {
@@ -78,9 +78,8 @@ function xmldb_tool_carcastc_upgrade($oldversion){
         }
 
         // Carcastc savepoint reached.
-        upgrade_plugin_savepoint(true, XXXXXXXXXX, 'tool', 'carcastc');
+        upgrade_plugin_savepoint(true, 2021300605, 'tool', 'carcastc');
     }
-
 
     return true;
 }
