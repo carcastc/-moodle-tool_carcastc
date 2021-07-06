@@ -36,7 +36,7 @@ $capabilities = [
                 ],
         ],
         'tool/carcastc:edit' => [
-                'riskbitmask' => RISK_SPAM,
+                'riskbitmask' => RISK_PERSONAL,
                 'captype' => 'write',
                 'contextlevel' => CONTEXT_COURSE,
                 'archetypes' => [

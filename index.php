@@ -24,24 +24,22 @@
 
 require_once(__DIR__ . '/../../../config.php');
 
-$id = required_param('id', PARAM_INT);
+$courseid = required_param('courseid', PARAM_INT);
 
 // Pass argument to query string.
-$url = new moodle_url('/admin/tool/carcastc/index.php', ['id' => $id]);
+$url = new moodle_url('/admin/tool/carcastc/index.php', ['courseid' => $courseid]);
 
 // Set most used strings in variable.
 $pnstring = get_string('pluginname', 'tool_carcastc');
 $hwstring = get_string('helloworld', 'tool_carcastc');
 
 $PAGE->set_context(context_system::instance());
-
 $PAGE->set_url($url);
-
 $PAGE->set_pagelayout('report');
 
-// Force users logued and check view capability.
+// Force users logged and check view capability.
 require_login();
-$context = context_course::instance($id);
+$context = context_course::instance($courseid);
 require_capability('tool/carcastc:view', $context);
 
 $PAGE->set_title($hwstring);
@@ -51,7 +49,7 @@ $PAGE->set_heading($pnstring);
 $userscount = $DB->count_records('user');
 
 // Get info course based on id param.
-$courseinfo = $DB->get_record_sql("SELECT fullname FROM {course} WHERE id = ?", [$id]);
+$courseinfo = $DB->get_record_sql("SELECT fullname FROM {course} WHERE id = ?", [$courseid]);
 
 echo $OUTPUT->header();
 echo $OUTPUT->heading($hwstring);
@@ -62,7 +60,13 @@ echo html_writer::div(get_string('youareviewing', 'tool_carcastc',
         html_writer::span($courseinfo->fullname ?? get_string('coursenotfound', 'tool_carcastc'), 'font-weight-bold')]));
 
 // Show tool_carcastc table rows.
-$tablesql = new  \tool_carcastc\tool_carcastc_tabledata('tool_carcastc', $id);
+$tablesql = new  \tool_carcastc\tool_carcastc_tabledata('tool_carcastc', $courseid);
 $tablesql->out(0, false);
+
+// Check capability and allow add row.
+if (has_capability('tool/carcastc:edit', $context)) {
+    echo html_writer::div(html_writer::link(new moodle_url('/admin/tool/carcastc/edit.php', ['courseid' => $courseid]),
+            get_string('new', 'tool_carcastc'), ['class' => 'btn btn-primary']));
+}
 
 echo $OUTPUT->footer();

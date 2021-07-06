@@ -38,6 +38,9 @@ class tool_carcastc_tabledata extends \table_sql {
     /** @var int */
     protected $courseid;
 
+    /** @var int */
+    protected $context;
+
     /**
      * Set up the tool_carcastc table.
      *
@@ -51,18 +54,31 @@ class tool_carcastc_tabledata extends \table_sql {
 
         $this->courseid = $courseid;
 
-        $this->define_columns(array('coursename', 'name', 'completed', 'priority', 'timecreated', 'timemodified'));
+        $columns = array('coursename', 'name', 'completed', 'priority', 'timecreated', 'timemodified');
 
-        $this->define_headers(array(
+        $headers = array(
                 get_string('coursename', 'tool_carcastc'),
                 get_string('name', 'tool_carcastc'),
                 get_string('completed', 'tool_carcastc'),
                 get_string('priority', 'tool_carcastc'),
                 get_string('timecreated', 'tool_carcastc'),
                 get_string('timemodified', 'tool_carcastc'),
-        ));
+        );
 
-        $this->pageable(true);
+        // Set context.
+        $this->context = \context_course::instance($this->courseid);
+
+        // Add action colum when user can edit.
+        if ($this->can_edit()) {
+            $columns[] = 'action';
+            $headers[] = get_string('action', 'tool_carcastc');
+        }
+
+        $this->define_columns($columns);
+
+        $this->define_headers($headers);
+
+        $this->pageable(false);
         $this->collapsible(false);
         $this->sortable(false);
         $this->is_downloadable(false);
@@ -87,7 +103,7 @@ class tool_carcastc_tabledata extends \table_sql {
      * @return string
      */
     protected function col_name($row) {
-        return format_string($row->coursename);
+        return format_string($row->name);
     }
 
     /**
@@ -129,6 +145,36 @@ class tool_carcastc_tabledata extends \table_sql {
     protected function col_timemodified($row) {
         return userdate($row->timemodified);
     }
+
+    /**
+     * Generate the actions column.
+     *
+     * @param \stdClass $row
+     * @return string
+     */
+    public function col_action($row) {
+        global $OUTPUT;
+        $actions = '';
+
+        if ($this->can_edit()) {
+            // Edit row.
+            $link = new \moodle_url('/admin/tool/carcastc/edit.php', ['id' => $row->id]);;
+            $icon = new \pix_icon('t/edit', get_string('edit', 'tool_carcastc'), 'core');
+            $actions .= $OUTPUT->action_icon($link, $icon, null);
+        }
+
+        return $actions;
+    }
+
+    /**
+     * Check capability tool/carcastc:edit for current user user.
+     *
+     * @return bool
+     */
+    public function can_edit() {
+        return \has_capability('tool/carcastc:edit', $this->context);
+    }
+
 
     /**
      * Set up the table_sql. Store results in the object for use by build_table.

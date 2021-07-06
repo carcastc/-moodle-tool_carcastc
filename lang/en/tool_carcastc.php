@@ -28,6 +28,7 @@ $string['pluginname'] = 'My first Moodle plugin';
 $string['coursenotfound'] = 'Course not found!';
 $string['helloworld'] = 'Hello World';
 $string['youareviewing'] = 'The course name is {$a->coursename} and there are in moodle {$a->userscount} user(s) registered';
+$string['nameexist'] = 'The name {$a->name} exists and must be unique in this course';
 
 // Table columns.
 $string['coursename'] = 'Course fullname';
@@ -36,6 +37,9 @@ $string['completed'] = 'Completed';
 $string['priority'] = 'Priority';
 $string['timecreated'] = 'Created at';
 $string['timemodified'] = 'Modified at';
+$string['edit'] = 'Edit row';
+$string['new'] = 'Add row';
+$string['action'] = 'Actions';
 
 // Capabilities.
 $string['carcastc:view'] = 'View carcastc data';
