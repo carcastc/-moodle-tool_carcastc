@@ -38,6 +38,12 @@ $PAGE->set_context(context_system::instance());
 $PAGE->set_url($url);
 
 $PAGE->set_pagelayout('report');
+
+// Force users logued and check view capability.
+require_login();
+$context = context_course::instance($id);
+require_capability('tool/carcastc:view', $context);
+
 $PAGE->set_title($hwstring);
 $PAGE->set_heading($pnstring);
 

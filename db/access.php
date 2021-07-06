@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Strings for component 'tool_carcastc', language 'en'
+ * Capabilities definition
  *
  * @package   tool_carcastc
  * @copyright 2021, Carlos Castillo <carlos.castillo@moodle.com>
@@ -24,19 +24,24 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$string['pluginname'] = 'My first Moodle plugin';
-$string['coursenotfound'] = 'Course not found!';
-$string['helloworld'] = 'Hello World';
-$string['youareviewing'] = 'The course name is {$a->coursename} and there are in moodle {$a->userscount} user(s) registered';
-
-// Table columns.
-$string['coursename'] = 'Course fullname';
-$string['name'] = 'Name';
-$string['completed'] = 'Completed';
-$string['priority'] = 'Priority';
-$string['timecreated'] = 'Created at';
-$string['timemodified'] = 'Modified at';
-
-// Capabilities.
-$string['carcastc:view'] = 'View carcastc data';
-$string['carcastc:edit'] = 'Edit carcastc data';
+$capabilities = [
+        'tool/carcastc:view' => [
+                'riskbitmask' => RISK_SPAM,
+                'captype' => 'read',
+                'contextlevel' => CONTEXT_COURSE,
+                'archetypes' => [
+                        'student' => CAP_ALLOW,
+                        'editingteacher' => CAP_ALLOW,
+                        'teacher' => CAP_ALLOW,
+                ],
+        ],
+        'tool/carcastc:edit' => [
+                'riskbitmask' => RISK_SPAM,
+                'captype' => 'write',
+                'contextlevel' => CONTEXT_COURSE,
+                'archetypes' => [
+                        'editingteacher' => CAP_ALLOW,
+                        'teacher' => CAP_ALLOW,
+                ],
+        ],
+];

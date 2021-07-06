@@ -33,11 +33,13 @@ defined('MOODLE_INTERNAL') || die();
  * @return void|null return null if we don't want to display the node.
  */
 function tool_carcastc_extend_navigation_course($navigation, $course, $context) {
-    $navigation->add(
-            get_string('pluginname', 'tool_carcastc'),
-            new moodle_url('/admin/tool/carcastc/index.php', ['id' => $course->id]),
-            navigation_node::TYPE_SETTING,
-            get_string('pluginname', 'tool_carcastc'),
-            'carcastc',
-            new pix_icon('icon', '', 'tool_carcastc'));
+    if (has_capability('tool/carcastc:view', $context)) {
+        $navigation->add(
+                get_string('pluginname', 'tool_carcastc'),
+                new moodle_url('/admin/tool/carcastc/index.php', ['id' => $course->id]),
+                navigation_node::TYPE_SETTING,
+                get_string('pluginname', 'tool_carcastc'),
+                'carcastc',
+                new pix_icon('icon', '', 'tool_carcastc'));
+    }
 }
