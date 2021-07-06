@@ -76,7 +76,7 @@ if ($mform->is_cancelled()) {
     redirect($home);
 } else if ($form = $mform->get_data()) {
     // In this case you process validated data. $form->get_data() returns data posted in form.
-    if ($form->id){
+    if ($form->id) {
         // Edit entry only some fields.
         $DB->update_record('tool_carcastc', (object)[
                 'id' => $form->id,

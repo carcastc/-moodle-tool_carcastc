@@ -26,7 +26,7 @@ namespace tool_carcastc;
 
 defined('MOODLE_INTERNAL') || die();
 
-//moodleform is defined in formslib.php
+// moodleform is defined in formslib.php.
 require_once($CFG->libdir.'/formslib.php');
 
 /**
@@ -78,7 +78,7 @@ class tool_carcast_formdata extends \moodleform {
 
         if ($foundname = $DB->get_records_select('tool_carcastc', 'name = :name AND courseid = :courseid AND id <> :id',
                 ['name' => $data['name'], 'courseid' => $data['courseid'], 'id' => $data['id']])) {
-                $errors['name']= get_string('nameexist', 'tool_carcastc', reset($foundname));
+                $errors['name'] = get_string('nameexist', 'tool_carcastc', reset($foundname));
         }
 
         return $errors;
