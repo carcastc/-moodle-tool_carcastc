@@ -33,6 +33,17 @@ if ($id) {
     $urlparams = ['id' => $id];
     $title = get_string('edit', 'tool_carcastc');
 } else {
+
+    // Process to delete row.
+    if ($deleteid = optional_param('delete', null, PARAM_INT)) {
+        require_sesskey();
+        $record = $DB->get_record('tool_carcastc', ['id' => $deleteid], '*', MUST_EXIST);
+        require_login(get_course($record->courseid));
+        require_capability('tool/carcastc:edit', context_course::instance($record->courseid));
+        $DB->delete_records('tool_carcastc', ['id' => $deleteid]);
+        redirect(new moodle_url('/admin/tool/carcastc/index.php', ['courseid' => $record->courseid]));
+    }
+
     // Else index.php sent courseid as parameter so is a new row.
     $courseid = required_param('courseid', PARAM_INT);
 

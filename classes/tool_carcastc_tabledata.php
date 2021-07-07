@@ -161,6 +161,11 @@ class tool_carcastc_tabledata extends \table_sql {
             $link = new \moodle_url('/admin/tool/carcastc/edit.php', ['id' => $row->id]);;
             $icon = new \pix_icon('t/edit', get_string('edit', 'tool_carcastc'), 'core');
             $actions .= $OUTPUT->action_icon($link, $icon, null);
+
+            // Delete row.
+            $link = new \moodle_url('/admin/tool/carcastc/edit.php', ['delete' => $row->id, 'sesskey' => sesskey()]);;
+            $icon = new \pix_icon('t/delete', get_string('edit', 'tool_carcastc'), 'core');
+            $actions .= $OUTPUT->action_icon($link, $icon, null);
         }
 
         return $actions;

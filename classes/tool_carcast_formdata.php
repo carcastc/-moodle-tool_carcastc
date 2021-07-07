@@ -78,7 +78,7 @@ class tool_carcast_formdata extends \moodleform {
 
         if ($foundname = $DB->get_records_select('tool_carcastc', 'name = :name AND courseid = :courseid AND id <> :id',
                 ['name' => $data['name'], 'courseid' => $data['courseid'], 'id' => $data['id']])) {
-                $errors['name'] = get_string('nameexist', 'tool_carcastc', reset($foundname));
+                $errors['name'] = get_string('nameexist', 'tool_carcastc', format_string(reset($foundname)->name));
         }
 
         return $errors;

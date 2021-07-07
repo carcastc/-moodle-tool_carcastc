@@ -57,7 +57,7 @@ echo $OUTPUT->heading($hwstring);
 // Pass parameter to language string.
 echo html_writer::div(get_string('youareviewing', 'tool_carcastc',
         ['userscount' => $userscount, 'coursename' =>
-        html_writer::span($courseinfo->fullname ?? get_string('coursenotfound', 'tool_carcastc'), 'font-weight-bold')]));
+        html_writer::span(format_string($courseinfo->fullname) ?? get_string('coursenotfound', 'tool_carcastc'), 'font-weight-bold')]));
 
 // Show tool_carcastc table rows.
 $tablesql = new  \tool_carcastc\tool_carcastc_tabledata('tool_carcastc', $courseid);
