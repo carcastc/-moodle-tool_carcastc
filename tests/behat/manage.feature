@@ -21,7 +21,6 @@ Feature: Add, edit and delete rows for courses by tool_carcast
 
   Scenario: Add and edit an row
     When I log in as "teacher"
-#    And I follow "Course 1"
     And I am on "Course 1" course homepage
     And I navigate to "My first Moodle plugin" in current page administration
     And I follow "Add row"
@@ -43,7 +42,6 @@ Feature: Add, edit and delete rows for courses by tool_carcast
 
   Scenario: Delete an row
     When I log in as "teacher"
-#    And I follow "Course 2"
     And I am on "Course 2" course homepage
     And I navigate to "My first Moodle plugin" in current page administration
     And I follow "Add row"
@@ -56,3 +54,4 @@ Feature: Add, edit and delete rows for courses by tool_carcast
     Then I should see "Row test 2"
     And I should not see "Row test 1"
     And I log out
+
