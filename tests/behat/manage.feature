@@ -54,4 +54,3 @@ Feature: Add, edit and delete rows for courses by tool_carcast
     Then I should see "Row test 2"
     And I should not see "Row test 1"
     And I log out
-
