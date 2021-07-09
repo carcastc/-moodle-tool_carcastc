@@ -106,7 +106,7 @@ class tool_carcastc_model {
      * @param array $params optional params
      * @return \bool return true if row is deleted
      */
-    public static function delete_row(array $params = [], int $strictness = MUST_EXIST) {
+    public static function delete_row(array $params = []) {
         global $DB;
 
         return $DB->delete_records('tool_carcastc', $params);
