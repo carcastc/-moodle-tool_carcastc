@@ -46,17 +46,17 @@ $PAGE->set_title($hwstring);
 $PAGE->set_heading($pnstring);
 
 // Count users registered in moodle.
-$userscount = $DB->count_records('user');
+$userscount = \tool_carcastc\tool_carcastc_model::get_rows_sql("SELECT COUNT(id) as countusers FROM {user}");
 
 // Get info course based on id param.
-$courseinfo = $DB->get_record_sql("SELECT fullname FROM {course} WHERE id = ?", [$courseid]);
+$courseinfo = \tool_carcastc\tool_carcastc_model::get_rows_sql("SELECT fullname FROM {course} WHERE id = ?", [$courseid]);
 
 echo $OUTPUT->header();
 echo $OUTPUT->heading($hwstring);
 
 // Pass parameter to language string.
 echo html_writer::div(get_string('youareviewing', 'tool_carcastc',
-        ['userscount' => $userscount, 'coursename' =>
+        ['userscount' => $userscount->countusers, 'coursename' =>
         html_writer::span(format_string($courseinfo->fullname) ?? get_string('coursenotfound', 'tool_carcastc'), 'font-weight-bold')]));
 
 // Show tool_carcastc table rows.

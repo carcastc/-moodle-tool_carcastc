@@ -28,7 +28,7 @@ $id = optional_param('id', 0, PARAM_INT);
 
 if ($id) {
     // If id is sent as param then return the row filter by this id.
-    $row = $DB->get_record('tool_carcastc', ['id' => $id], '*', MUST_EXIST);
+    $row = \tool_carcastc\tool_carcastc_model::get_row(['id' => $id]);
     $courseid = $row->courseid;
     $urlparams = ['id' => $id];
     $title = get_string('edit', 'tool_carcastc');
@@ -37,10 +37,10 @@ if ($id) {
     // Process to delete row.
     if ($deleteid = optional_param('delete', null, PARAM_INT)) {
         require_sesskey();
-        $record = $DB->get_record('tool_carcastc', ['id' => $deleteid], '*', MUST_EXIST);
+        $record = \tool_carcastc\tool_carcastc_model::get_row(['id' => $deleteid]);
         require_login(get_course($record->courseid));
         require_capability('tool/carcastc:edit', context_course::instance($record->courseid));
-        $DB->delete_records('tool_carcastc', ['id' => $deleteid]);
+        \tool_carcastc\tool_carcastc_model::delete_row(['id' => $deleteid]);
         redirect(new moodle_url('/admin/tool/carcastc/index.php', ['courseid' => $record->courseid]));
     }
 
@@ -87,26 +87,7 @@ if ($mform->is_cancelled()) {
     redirect($home);
 } else if ($form = $mform->get_data()) {
     // In this case you process validated data. $form->get_data() returns data posted in form.
-    if ($form->id) {
-        // Edit entry only some fields.
-        $DB->update_record('tool_carcastc', (object)[
-                'id' => $form->id,
-                'name' => $form->name,
-                'completed' => $form->completed,
-                'timemodified' => time()
-        ]);
-    } else {
-        // Add new entry.
-        $DB->insert_record('tool_carcastc', [
-                'courseid' => $form->courseid,
-                'name' => $form->name,
-                'completed' => $form->completed,
-                'priority' => 0,
-                'timecreated' => time(),
-                'timemodified' => time()
-        ]);
-    }
-
+    \tool_carcastc\tool_carcastc_model::save_row($form);
     redirect($home);
 }
 
