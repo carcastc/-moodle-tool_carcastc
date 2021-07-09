@@ -52,6 +52,8 @@ class tool_carcastc_tabledata extends \table_sql {
 
         parent::__construct($uniqueid);
 
+        $this->set_attribute('id', 'tool_carcastc_overview');
+
         $this->courseid = $courseid;
 
         $columns = array('coursename', 'name', 'completed', 'priority', 'timecreated', 'timemodified');
@@ -163,8 +165,8 @@ class tool_carcastc_tabledata extends \table_sql {
             $actions .= $OUTPUT->action_icon($link, $icon, null);
 
             // Delete row.
-            $link = new \moodle_url('/admin/tool/carcastc/edit.php', ['delete' => $row->id, 'sesskey' => sesskey()]);;
-            $icon = new \pix_icon('t/delete', get_string('edit', 'tool_carcastc'), 'core');
+            $link = new \moodle_url('/admin/tool/carcastc/edit.php', ['delete' => $row->id, 'sesskey' => sesskey()]);
+            $icon = new \pix_icon('t/delete', get_string('delete', 'tool_carcastc'), 'core');
             $actions .= $OUTPUT->action_icon($link, $icon, null);
         }
 
