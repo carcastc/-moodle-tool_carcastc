@@ -26,7 +26,7 @@ namespace tool_carcastc;
 
 defined('MOODLE_INTERNAL') || die();
 
-// moodleform is defined in formslib.php.
+// Moodleform is defined in formslib.php.
 require_once($CFG->libdir.'/formslib.php');
 
 /**

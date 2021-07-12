@@ -19,6 +19,7 @@ Feature: Add, edit and delete rows for courses by tool_carcast
       | student | C1     | student |
       | student | C2     | student |
 
+  @javascript
   Scenario: Add and edit an row
     When I log in as "teacher"
     And I am on "Course 1" course homepage
@@ -40,6 +41,7 @@ Feature: Add, edit and delete rows for courses by tool_carcast
       | Row test 1 |  Yes       |
     And I log out
 
+  @javascript
   Scenario: Delete an row
     When I log in as "teacher"
     And I am on "Course 2" course homepage
