@@ -231,7 +231,7 @@ class tool_carcastc_tabledata extends \table_sql {
         global $DB;
 
         $sql = "SELECT tc.id, tc.courseid, c.fullname as coursename, tc.name, tc.completed,
-       tc.description, tc.descriptionformat, tc.priority, tc.timecreated, tc.timemodified
+                tc.description, tc.descriptionformat, tc.priority, tc.timecreated, tc.timemodified
                 FROM {tool_carcastc} tc
                 JOIN {course} c ON c.id = tc.courseid
                 WHERE tc.courseid = ? ";

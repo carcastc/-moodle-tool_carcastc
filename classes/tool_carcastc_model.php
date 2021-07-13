@@ -75,7 +75,7 @@ class tool_carcastc_model {
      * @throws \coding_exception
      */
     public static function save_row(\stdClass $form, bool $returnid = true) {
-        global $DB, $PAGE;
+        global $DB;
 
         $context = context_course::instance($form->courseid);
         $editoroptions = ['trusttext' => true, 'subdirs' => true, 'maxfiles' => -1, 'maxbytes' => 0, 'context' => $context];
