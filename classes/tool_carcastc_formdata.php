@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Class tool_carcast_formdata
+ * Class tool_carcastc_formdata
  *
  * @package   tool_carcastc
  * @copyright 2021, Carlos Castillo <carlos.castillo@moodle.com>
@@ -30,13 +30,13 @@ defined('MOODLE_INTERNAL') || die();
 require_once($CFG->libdir.'/formslib.php');
 
 /**
- * Class tool_carcast_formdata to display form insert and edit
+ * Class tool_carcastc_formdata to display form insert and edit
  *
  * @package   tool_carcastc
  * @copyright 2021, Carlos Castillo <carlos.castillo@moodle.com>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class tool_carcast_formdata extends \moodleform {
+class tool_carcastc_formdata extends \moodleform {
 
     /**
      * Form definition

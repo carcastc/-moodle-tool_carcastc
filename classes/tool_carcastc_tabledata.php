@@ -23,9 +23,9 @@
  */
 namespace tool_carcastc;
 
-use context_course;
-
 defined('MOODLE_INTERNAL') || die();
+
+use context_course;
 require_once($CFG->libdir . '/tablelib.php');
 
 /**

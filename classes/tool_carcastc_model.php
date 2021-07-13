@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Class tool_carcast_model
+ * Class tool_carcastc_model
  *
  * @package   tool_carcastc
  * @copyright 2021, Carlos Castillo <carlos.castillo@moodle.com>
@@ -24,12 +24,12 @@
 
 namespace tool_carcastc;
 
+defined('MOODLE_INTERNAL') || die();
+
 use context_course;
 
-defined('MOODLE_INTERNAL') || die;
-
 /**
- * Class tool_carcast_model to handle all plugin logic
+ * Class tool_carcastc_model to handle all plugin logic
  *
  * @package   tool_carcastc
  * @copyright 2021, Carlos Castillo <carlos.castillo@moodle.com>

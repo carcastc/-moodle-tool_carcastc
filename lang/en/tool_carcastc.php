@@ -27,7 +27,8 @@ defined('MOODLE_INTERNAL') || die();
 $string['pluginname'] = 'My first Moodle plugin';
 $string['coursenotfound'] = 'Course not found!';
 $string['helloworld'] = 'Hello World';
-$string['youareviewing'] = 'The course name is {$a->coursename} and there are in moodle {$a->userscount} user(s) registered';
+$string['youareviewing'] = 'The course name is {$a}';
+$string['userscount'] = 'There are in moodle {$a} user(s) registered';
 $string['nameexist'] = 'The name {$a} exists and must be unique in this course';
 
 // Table columns.

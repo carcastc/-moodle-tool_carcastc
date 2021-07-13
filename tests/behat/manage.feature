@@ -1,5 +1,5 @@
 @tool @tool_carcastc
-Feature: Add, edit and delete rows for courses by tool_carcast
+Feature: Add, edit and delete rows for courses by tool_carcastc
   As student only need to see rows
   As teacher i could be add, edit and delete rows
 

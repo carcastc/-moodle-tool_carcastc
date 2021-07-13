@@ -15,35 +15,35 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Page API
+ * Class renderer
  *
  * @package   tool_carcastc
  * @copyright 2021, Carlos Castillo <carlos.castillo@moodle.com>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-require_once(__DIR__ . '/../../../config.php');
+defined('MOODLE_INTERNAL') || die();
 
-$courseid = required_param('courseid', PARAM_INT);
+use tool_carcastc\output\tool_carcastc_rows;
 
-// Pass argument to query string.
-$url = new moodle_url('/admin/tool/carcastc/index.php', ['courseid' => $courseid]);
-$PAGE->set_url($url);
+/**
+ * Class tool_carcastc_renderer to render output data
+ *
+ * @package   tool_carcastc
+ * @copyright 2021, Carlos Castillo <carlos.castillo@moodle.com>
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+class tool_carcastc_renderer extends plugin_renderer_base {
 
-// Force users logged and check view capability.
-require_login($courseid);
-$context = context_course::instance($courseid);
-require_capability('tool/carcastc:view', $context);
+    /**
+     * Renders an entries list.
+     *
+     * @param tool_carcastc_rows $data
+     * @return string HTML
+     */
+    protected function render_tool_carcastc_rows(tool_carcastc_rows $data) {
+        $content = $data->export_for_template($this);
+        return $this->render_from_template('tool_carcastc/rows_list', $content);
+    }
 
-// Set most used strings in variable.
-$pnstring = get_string('pluginname', 'tool_carcastc');
-$hwstring = get_string('helloworld', 'tool_carcastc');
-
-$PAGE->set_title($hwstring);
-$PAGE->set_heading($pnstring);
-
-$outputpage = new \tool_carcastc\output\tool_carcastc_rows($courseid);
-$output = $PAGE->get_renderer('tool_carcastc');
-echo $output->header();
-echo $output->render($outputpage);
-echo $output->footer();
+}

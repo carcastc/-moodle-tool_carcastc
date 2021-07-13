@@ -72,8 +72,8 @@ require_capability('tool/carcastc:edit', $context);
 $PAGE->set_title($title);
 $PAGE->set_heading($pnstring);
 
-// Instantiate tool_carcast_formdata.
-$mform = new \tool_carcastc\tool_carcast_formdata();
+// Instantiate tool_carcastc_formdata.
+$mform = new \tool_carcastc\tool_carcastc_formdata();
 
 if (isset($row->id)) {
     $editoroptions = ['trusttext' => true, 'subdirs' => true, 'maxfiles' => -1, 'maxbytes' => 0, 'context' => $context];
