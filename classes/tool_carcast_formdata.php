@@ -42,6 +42,7 @@ class tool_carcast_formdata extends \moodleform {
      * Form definition
      */
     protected function definition() {
+        global $PAGE;
         $mform = $this->_form; // Don't forget the underscore!
 
         // Add name text-element to form.
@@ -50,6 +51,13 @@ class tool_carcast_formdata extends \moodleform {
 
         // Add completed checkbox-element to form.
         $mform->addElement('advcheckbox', 'completed', get_string('completed', 'tool_carcastc'));
+
+        // Add description editor to form.
+        $editoroptions = ['trusttext' => true, 'subdirs' => true, 'maxfiles' => -1, 'maxbytes' => 0,
+                'context' => $PAGE->context, 'noclean' => true];
+        $mform->addElement('editor', 'description_editor',
+                get_string('description', 'tool_carcastc'),
+                null, $editoroptions);
 
         // Add courseid hidden-element to form.
         $mform->addElement('hidden', 'courseid');

@@ -24,6 +24,8 @@
 
 namespace tool_carcastc;
 
+use context_course;
+
 defined('MOODLE_INTERNAL') || die;
 
 /**
@@ -72,18 +74,30 @@ class tool_carcastc_model {
      * @throws \dml_exception
      * @throws \coding_exception
      */
-    public static function save_row(\stdClass $form, bool $returnid = false) {
-        global $DB;
+    public static function save_row(\stdClass $form, bool $returnid = true) {
+        global $DB, $PAGE;
+
+        $context = context_course::instance($form->courseid);
+        $editoroptions = ['trusttext' => true, 'subdirs' => true, 'maxfiles' => -1, 'maxbytes' => 0, 'context' => $context];
 
         try {
             if (isset($form->id) && $form->id) {
+
+                // Update the description if is sent in form.
+                if (isset($form->description_editor)) {
+                    $form = file_postupdate_standard_editor($form, 'description',
+                            $editoroptions, $editoroptions['context'], 'tool_carcastc', 'rowfile', $form->id);
+                }
+
                 $row = [
                         'id' => $form->id,
                         'name' => $form->name,
                         'completed' => $form->completed,
+                        'description' => $form->description,
+                        'descriptionformat' => $form->descriptionformat,
                         'timemodified' => time()
                 ];
-                return $DB->update_record('tool_carcastc', (object) $row);
+                $rowid = $DB->update_record('tool_carcastc', (object) $row);
             } else {
                 $row = [
                         'courseid' => $form->courseid,
@@ -93,8 +107,22 @@ class tool_carcastc_model {
                         'timecreated' => time(),
                         'timemodified' => time()
                 ];
-                return $DB->insert_record('tool_carcastc', $row, $returnid);
+
+                $rowid = $DB->insert_record('tool_carcastc', $row, $returnid);
+
+                // After insert row update the description and save the files.
+                if (isset($form->description_editor)) {
+                    $form = file_postupdate_standard_editor($form, 'description',
+                            $editoroptions, $editoroptions['context'], 'tool_carcastc', 'rowfile', $rowid);
+
+                    $updatedrow = ['id' => $rowid, 'description' => $form->description,
+                            'descriptionformat' => $form->descriptionformat];
+                    $DB->update_record('tool_carcastc', (object) $updatedrow);
+                }
+
             }
+
+            return $rowid;
         } catch (\dml_exception $e) {
             throw new \coding_exception($e->getMessage());
         }

@@ -37,6 +37,7 @@ $string['completed'] = 'Completed';
 $string['priority'] = 'Priority';
 $string['timecreated'] = 'Created at';
 $string['timemodified'] = 'Modified at';
+$string['description'] = 'Description';
 $string['edit'] = 'Edit row';
 $string['delete'] = 'Delete row';
 $string['new'] = 'Add row';

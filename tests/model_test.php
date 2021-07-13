@@ -57,7 +57,7 @@ class tool_carcastc_model_testcase extends advanced_testcase {
                 'name' => 'Row test 1',
                 'completed' => 1,
                 'priority' => 0
-        ], true);
+        ]);
 
         $row = \tool_carcastc\tool_carcastc_model::get_row(['id' => $rowid]);
         $this->assertEquals($this->course->id, $row->courseid);
@@ -73,19 +73,60 @@ class tool_carcastc_model_testcase extends advanced_testcase {
                 'name' => 'Row test 1',
                 'completed' => 1,
                 'priority' => 0
-        ], true);
+        ]);
 
         \tool_carcastc\tool_carcastc_model::save_row((object)[
                 'id' => $rowid,
                 'courseid' => $this->course->id,
                 'name' => 'Row test 2',
                 'completed' => 1,
-                'priority' => 0
-        ], true);
+                'priority' => 0,
+                'descriptionformat' => 0,
+                'description' => 'Description update 1'
+        ]);
 
         $row = \tool_carcastc\tool_carcastc_model::get_row(['id' => $rowid]);
         $this->assertEquals($this->course->id, $row->courseid);
         $this->assertEquals('Row test 2', $row->name);
+        $this->assertEquals('Description update 1', $row->description);
+    }
+
+    /**
+     * Test for tool_carcastc_model::save_row and tool_carcastc_model::get_row when use editor
+     */
+    public function test_editor() {
+        $rowid = \tool_carcastc\tool_carcastc_model::save_row((object)[
+                'courseid' => $this->course->id,
+                'name' => 'Row test 3',
+                'completed' => 1,
+                'priority' => 0,
+                'description_editor' => [
+                        'text' => 'Description to row test 3',
+                        'format' => FORMAT_HTML
+                ]
+        ]);
+
+        $row = \tool_carcastc\tool_carcastc_model::get_row(['id' => $rowid]);
+        $this->assertEquals($this->course->id, $row->courseid);
+        $this->assertEquals('Description to row test 3', $row->description);
+        $this->assertEquals('Row test 3', $row->name);
+
+        \tool_carcastc\tool_carcastc_model::save_row((object)[
+                'id' => $rowid,
+                'courseid' => $this->course->id,
+                'name' => 'Row test 3 edited',
+                'completed' => 1,
+                'description_editor' => [
+                        'text' => 'Description to row test 3 edited',
+                        'format' => FORMAT_HTML
+                ]
+        ]);
+
+        $row = \tool_carcastc\tool_carcastc_model::get_row(['id' => $rowid]);
+
+        $this->assertEquals($this->course->id, $row->courseid);
+        $this->assertEquals('Description to row test 3 edited', $row->description);
+        $this->assertEquals('Row test 3 edited', $row->name);
     }
 
     /**
@@ -97,7 +138,7 @@ class tool_carcastc_model_testcase extends advanced_testcase {
                 'name' => 'Row test 1',
                 'completed' => 1,
                 'priority' => 0
-        ], true);
+        ]);
 
         \tool_carcastc\tool_carcastc_model::delete_row(['id' => $rowid]);
 

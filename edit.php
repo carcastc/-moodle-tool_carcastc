@@ -75,6 +75,12 @@ $PAGE->set_heading($pnstring);
 // Instantiate tool_carcast_formdata.
 $mform = new \tool_carcastc\tool_carcast_formdata();
 
+if (isset($row->id)) {
+    $editoroptions = ['trusttext' => true, 'subdirs' => true, 'maxfiles' => -1, 'maxbytes' => 0, 'context' => $context];
+    file_prepare_standard_editor($row, 'description', $editoroptions, $editoroptions['context'],
+            'tool_carcastc', 'rowfile', $row->id);
+}
+
 // Set default data (if any).
 $mform->set_data($row);
 

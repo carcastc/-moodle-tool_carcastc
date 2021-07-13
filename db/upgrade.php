@@ -48,6 +48,8 @@ function xmldb_tool_carcastc_upgrade($oldversion) {
         $table->add_field('priority', XMLDB_TYPE_INTEGER, '1', null, XMLDB_NOTNULL, null, '1');
         $table->add_field('timecreated', XMLDB_TYPE_INTEGER, '10', null, null, null, null);
         $table->add_field('timemodified', XMLDB_TYPE_INTEGER, '10', null, null, null, null);
+        $table->add_field('description', XMLDB_TYPE_TEXT, null, null, null, null, null);
+        $table->add_field('descriptionformat', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, null);
 
         // Adding keys to table tool_carcastc.
         $table->add_key('primary', XMLDB_KEY_PRIMARY, ['id']);
@@ -71,6 +73,30 @@ function xmldb_tool_carcastc_upgrade($oldversion) {
 
         // Carcastc savepoint reached.
         upgrade_plugin_savepoint(true, 2021300605, 'tool', 'carcastc');
+    }
+
+    if ($oldversion < 2021300611) {
+
+        // Define field description to be added to tool_carcastc.
+        $table = new xmldb_table('tool_carcastc');
+        $field = new xmldb_field('description', XMLDB_TYPE_TEXT, null, null, null, null, null, 'timemodified');
+
+        // Conditionally launch add field description.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // Define field descriptionformat to be added to tool_carcastc.
+        $table = new xmldb_table('tool_carcastc');
+        $field = new xmldb_field('descriptionformat', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '0', 'description');
+
+        // Conditionally launch add field descriptionformat.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // Carcastc savepoint reached.
+        upgrade_plugin_savepoint(true, 2021300611, 'tool', 'carcastc');
     }
 
     return true;

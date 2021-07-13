@@ -24,8 +24,8 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version    = 2021300610; // The current plugin version (Date: YYYYMMDDXX).
+$plugin->version    = 2021300611; // The current plugin version (Date: YYYYMMDDXX).
 $plugin->requires   = 2021051700; // Requires this Moodle version.
 $plugin->component  = 'tool_carcastc'; // Full name of the plugin (used for diagnostics).
 $plugin->maturity   = MATURITY_STABLE; // Maturity.
-$plugin->release    = '2.0';     // Release name.
+$plugin->release    = '2.1';     // Release name.

@@ -23,6 +23,8 @@
  */
 namespace tool_carcastc;
 
+use context_course;
+
 defined('MOODLE_INTERNAL') || die();
 require_once($CFG->libdir . '/tablelib.php');
 
@@ -56,11 +58,12 @@ class tool_carcastc_tabledata extends \table_sql {
 
         $this->courseid = $courseid;
 
-        $columns = array('coursename', 'name', 'completed', 'priority', 'timecreated', 'timemodified');
+        $columns = array('coursename', 'name', 'description', 'completed', 'priority', 'timecreated', 'timemodified');
 
         $headers = array(
                 get_string('coursename', 'tool_carcastc'),
                 get_string('name', 'tool_carcastc'),
+                get_string('description', 'tool_carcastc'),
                 get_string('completed', 'tool_carcastc'),
                 get_string('priority', 'tool_carcastc'),
                 get_string('timecreated', 'tool_carcastc'),
@@ -106,6 +109,22 @@ class tool_carcastc_tabledata extends \table_sql {
      */
     protected function col_name($row) {
         return format_string($row->name);
+    }
+
+    /**
+     * Displays column description
+     *
+     * @param stdClass $row
+     * @return string
+     */
+    protected function col_description($row) {
+
+        $context = context_course::instance($row->courseid);
+        $editoroptions = ['trusttext' => true, 'subdirs' => true, 'maxfiles' => -1, 'maxbytes' => 0,
+                'context' => $context, 'noclean' => true];
+        $description = file_rewrite_pluginfile_urls($row->description, 'pluginfile.php',
+                $editoroptions['context']->id, 'tool_carcastc', 'rowfile', $row->id, $editoroptions);
+        return format_text($description, $row->descriptionformat, $editoroptions);
     }
 
     /**
@@ -211,7 +230,8 @@ class tool_carcastc_tabledata extends \table_sql {
     private function get_rows_table() {
         global $DB;
 
-        $sql = "SELECT tc.id, c.fullname as coursename, tc.name, tc.completed, tc.priority, tc.timecreated, tc.timemodified
+        $sql = "SELECT tc.id, tc.courseid, c.fullname as coursename, tc.name, tc.completed,
+       tc.description, tc.descriptionformat, tc.priority, tc.timecreated, tc.timemodified
                 FROM {tool_carcastc} tc
                 JOIN {course} c ON c.id = tc.courseid
                 WHERE tc.courseid = ? ";

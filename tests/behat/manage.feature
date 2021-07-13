@@ -28,17 +28,19 @@ Feature: Add, edit and delete rows for courses by tool_carcast
     And I set the following fields to these values:
       | Name      | Row test 1 |
       | Completed | 0            |
+      | Description | Description 1            |
     And I press "Save changes"
     Then the following should exist in the "tool_carcastc_overview" table:
-      | Name         | Completed |
-      | Row test 1 | No        |
+      | Name         | Completed | Description      |
+      | Row test 1   | No        | Description 1    |
     And I click on "Edit row" "link" in the "Row test 1" "table_row"
     And I set the following fields to these values:
       | Completed | 1            |
+      | Description | Description edited            |
     And I press "Save changes"
     And the following should exist in the "tool_carcastc_overview" table:
-      | Name         | Completed |
-      | Row test 1 |  Yes       |
+      | Name         | Completed | Description      |
+      | Row test 1 |  Yes       | Description edited    |
     And I log out
 
   @javascript
