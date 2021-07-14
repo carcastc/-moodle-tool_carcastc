@@ -42,3 +42,10 @@
 {{#addrow}}
     {{{addrow}}}
 {{/addrow}}
+
+{{#js}}
+    // Initialise the JS.
+    require(['tool_carcastc/carcastc'], function(func) {
+        func.init();
+    });
+{{/js}}

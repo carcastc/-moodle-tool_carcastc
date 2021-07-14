@@ -186,7 +186,7 @@ class tool_carcastc_tabledata extends \table_sql {
             // Delete row.
             $link = new \moodle_url('/admin/tool/carcastc/edit.php', ['delete' => $row->id, 'sesskey' => sesskey()]);
             $icon = new \pix_icon('t/delete', get_string('delete', 'tool_carcastc'), 'core');
-            $actions .= $OUTPUT->action_icon($link, $icon, null);
+            $actions .= $OUTPUT->action_icon($link, $icon, null, ['data-action' => 'deleterow']);
         }
 
         return $actions;

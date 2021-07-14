@@ -43,7 +43,6 @@ Feature: Add, edit and delete rows for courses by tool_carcastc
       | Row test 1 |  Yes       | Description edited    |
     And I log out
 
-  @javascript
   Scenario: Delete an row
     When I log in as "teacher"
     And I am on "Course 2" course homepage

@@ -30,6 +30,7 @@ $string['helloworld'] = 'Hello World';
 $string['youareviewing'] = 'The course name is {$a}';
 $string['userscount'] = 'There are in moodle {$a} user(s) registered';
 $string['nameexist'] = 'The name {$a} exists and must be unique in this course';
+$string['confirmdeleterow'] = 'Are you sure you want to delete this row?';
 
 // Table columns.
 $string['coursename'] = 'Course fullname';

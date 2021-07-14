@@ -76,7 +76,6 @@ class tool_carcastc_rows implements \templatable, \renderable {
         $table = new tool_carcastc_tabledata('tool_carcastc', $this->courseid);
         $table->out(20, false);
         $data['table'] = ob_get_clean();
-        ob_end_clean();
 
         // Link to add new row.
         if (has_capability('tool/carcastc:edit', $context)) {
