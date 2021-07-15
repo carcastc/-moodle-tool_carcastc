@@ -98,6 +98,10 @@ class tool_carcastc_model {
                         'timemodified' => time()
                 ];
                 $rowid = $DB->update_record('tool_carcastc', (object) $row);
+
+                // Trigger event.
+                self::trigger_event('updated', (object)['id' => $row['id'], 'courseid' => $form->courseid]);
+
             } else {
                 $row = [
                         'courseid' => $form->courseid,
@@ -120,6 +124,9 @@ class tool_carcastc_model {
                     $DB->update_record('tool_carcastc', (object) $updatedrow);
                 }
 
+                // Trigger event.
+                self::trigger_event('created', (object)['id' => $rowid, 'courseid' => $form->courseid]);
+
             }
 
             return $rowid;
@@ -137,6 +144,51 @@ class tool_carcastc_model {
     public static function delete_row(array $params = []) {
         global $DB;
 
-        return $DB->delete_records('tool_carcastc', $params);
+        if (!$row = self::get_row(['id' => $params['id']], IGNORE_MISSING)) {
+            return false;
+        }
+
+        $DB->delete_records('tool_carcastc', $params);
+
+        // Trigger event.
+        self::trigger_event('deleted', $row, true);
+
+        return true;
+    }
+
+    /**
+     * Trigger events
+     *
+     * @param string $event event to triggered
+     * @param object $row row object
+     * @param bool $snapshot true if need create snapshot
+     * @return \void
+     */
+    public static function trigger_event(string $event, object $row, bool $snapshot = false) {
+
+        // Trigger events.
+        $event = call_user_func("\\tool_carcastc\\event\\row_".$event. "::create", [
+                'context' => context_course::instance($row->courseid),
+                'objectid' => $row->id
+        ]);
+
+        if ($snapshot) {
+            $event->add_record_snapshot('tool_carcastc', $row);
+        }
+
+        $event->trigger();
+    }
+
+
+
+    /**
+     * Method called when course_deleted event is triggered deleting all rows created in tool_carcastc with this courseid
+     *
+     * @param \core\event\course_deleted $event
+     */
+    public static function on_course_deleted_observer(\core\event\course_deleted $event) {
+        global $DB;
+
+        $DB->delete_records('tool_carcastc', ['courseid' => $event->objectid]);
     }
 }

@@ -15,8 +15,8 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Version information
-
+ * Events for tool carcastc
+ *
  * @package   tool_carcastc
  * @copyright 2021, Carlos Castillo <carlos.castillo@moodle.com>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -24,8 +24,11 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version    = 2021300614; // The current plugin version (Date: YYYYMMDDXX).
-$plugin->requires   = 2021051700; // Requires this Moodle version.
-$plugin->component  = 'tool_carcastc'; // Full name of the plugin (used for diagnostics).
-$plugin->maturity   = MATURITY_STABLE; // Maturity.
-$plugin->release    = '2.4';     // Release name.
+$observers = array(
+
+    array(
+            'eventname'   => '\core\event\course_deleted',
+            'callback'    => '\tool_carcastc\tool_carcastc_model::on_course_deleted_observer',
+    ),
+
+);

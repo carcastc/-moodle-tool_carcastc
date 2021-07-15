@@ -16,7 +16,7 @@
 /**
  * Javascript module ES6 for tool_carcarstc
  *
- * @package    tool_carcastc
+ * @package   tool_carcastc
  * @copyright 2021, Carlos Castillo <carlos.castillo@moodle.com>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -24,7 +24,6 @@
 import Notification from 'core/notification';
 import Pending from "core/pending";
 import {get_strings as getStrings} from "core/str";
-import Log from "core/log";
 
 const SELECTORS = {
     DELETE_ROW: '[data-action="deleterow"]',
@@ -37,7 +36,6 @@ const SELECTORS = {
  */
 const confirmDelete = (element) => {
     const pendingPromise = new Pending('tool_carcastc/carcastc:confirmDelete');
-    Log.debug(element.href);
     getStrings([
         {'key': 'confirm'},
         {'key': 'confirmdeleterow', component: 'tool_carcastc'},
@@ -55,13 +53,11 @@ const confirmDelete = (element) => {
 
 
 export const init = () => {
-
     document.addEventListener('click', e => {
         const triggerElement = e.target.closest(SELECTORS.DELETE_ROW);
         if (triggerElement) {
             e.preventDefault();
             confirmDelete(triggerElement);
         }
-
     });
 };

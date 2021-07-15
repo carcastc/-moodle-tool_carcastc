@@ -42,6 +42,9 @@ $hwstring = get_string('helloworld', 'tool_carcastc');
 $PAGE->set_title($hwstring);
 $PAGE->set_heading($pnstring);
 
+// Trigger event.
+\tool_carcastc\tool_carcastc_model::trigger_event('viewed', (object)['id' => $courseid, 'courseid' => $courseid]);
+
 $outputpage = new \tool_carcastc\output\tool_carcastc_rows($courseid);
 $output = $PAGE->get_renderer('tool_carcastc');
 echo $output->header();

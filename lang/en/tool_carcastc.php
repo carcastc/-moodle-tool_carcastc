@@ -32,6 +32,11 @@ $string['userscount'] = 'There are in moodle {$a} user(s) registered';
 $string['nameexist'] = 'The name {$a} exists and must be unique in this course';
 $string['confirmdeleterow'] = 'Are you sure you want to delete this row?';
 
+$string['eventrowcreated'] = 'Row created';
+$string['eventrowviewed'] = 'Row viewed';
+$string['eventrowupdated'] = 'Row updated';
+$string['eventrowdeleted'] = 'Row deleted';
+
 // Table columns.
 $string['coursename'] = 'Course fullname';
 $string['name'] = 'Name';
