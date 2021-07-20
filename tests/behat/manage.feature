@@ -19,7 +19,6 @@ Feature: Add, edit and delete rows for courses by tool_carcastc
       | student | C1     | student |
       | student | C2     | student |
 
-  @javascript
   Scenario: Add and edit an row
     When I log in as "teacher"
     And I am on "Course 1" course homepage
@@ -43,7 +42,7 @@ Feature: Add, edit and delete rows for courses by tool_carcastc
       | Row test 1 |  Yes       | Description edited    |
     And I log out
 
-  Scenario: Delete an row
+  Scenario: Delete an row without javascript
     When I log in as "teacher"
     And I am on "Course 2" course homepage
     And I navigate to "My first Moodle plugin" in current page administration
@@ -56,4 +55,21 @@ Feature: Add, edit and delete rows for courses by tool_carcastc
     And I click on "Delete row" "link" in the "Row test 1" "table_row"
     Then I should see "Row test 2"
     And I should not see "Row test 1"
+    And I log out
+
+  @javascript @test_ajax_delete_row
+  Scenario: Delete an row with javascript
+    When I log in as "teacher"
+    And I am on "Course 2" course homepage
+    And I navigate to "My first Moodle plugin" in current page administration
+    And I follow "Add row"
+    And I set the field "Name" to "Row test 1 j"
+    And I press "Save changes"
+    And I follow "Add row"
+    And I set the field "Name" to "Row test 2 j"
+    And I press "Save changes"
+    And I click on "Delete row" "link" in the "Row test 1" "table_row"
+    And I press "Yes"
+    Then I should see "Row test 2 j"
+    And I should not see "Row test 1 j"
     And I log out

@@ -33,16 +33,16 @@
         "addrow": "#"
     }
 }}
+<div id="tool_carcastc_rows_list">
+    <h3>{{#str}} youareviewing , tool_carcastc , {{info.coursename}} {{/str}}</h3>
+    <h5>{{#str}} userscount , tool_carcastc , {{info.userscount}} {{/str}}</h5>
 
-<h3>{{#str}} youareviewing , tool_carcastc , {{info.coursename}} {{/str}}</h3>
-<h5>{{#str}} userscount , tool_carcastc , {{info.userscount}} {{/str}}</h5>
+    {{{table}}}
 
-{{{table}}}
-
-{{#addrow}}
-    {{{addrow}}}
-{{/addrow}}
-
+    {{#addrow}}
+        {{{addrow}}}
+    {{/addrow}}
+</div>
 {{#js}}
     // Initialise the JS.
     require(['tool_carcastc/carcastc'], function(func) {

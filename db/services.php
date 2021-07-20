@@ -15,8 +15,8 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Version information
-
+ * Services for tool carcastc
+ *
  * @package   tool_carcastc
  * @copyright 2021, Carlos Castillo <carlos.castillo@moodle.com>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -24,8 +24,22 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version    = 2021300615; // The current plugin version (Date: YYYYMMDDXX).
-$plugin->requires   = 2021051700; // Requires this Moodle version.
-$plugin->component  = 'tool_carcastc'; // Full name of the plugin (used for diagnostics).
-$plugin->maturity   = MATURITY_STABLE; // Maturity.
-$plugin->release    = '2.5';     // Release name.
+// Definition of services to handle delete row.
+$functions = array(
+        'tool_carcastc_delete_row' => array(
+                'classname'    => 'tool_carcastc\tool_carcastc_external',
+                'methodname'   => 'delete_row',
+                'description'  => 'Deletes an row',
+                'type'         => 'write',
+                'capabilities' => 'tool/carcastc:edit',
+                'ajax'         => true,
+        ),
+        'tool_carcastc_display_rows' => array(
+                'classname'    => 'tool_carcastc\tool_carcastc_external',
+                'methodname'   => 'display_rows',
+                'description'  => 'Returns list of rows',
+                'type'         => 'read',
+                'capabilities' => 'tool/carcastc:view',
+                'ajax'         => true,
+        ),
+);

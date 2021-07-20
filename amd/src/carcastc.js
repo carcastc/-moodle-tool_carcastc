@@ -24,17 +24,23 @@
 import Notification from 'core/notification';
 import Pending from "core/pending";
 import {get_strings as getStrings} from "core/str";
+import Ajax from "core/ajax";
+import Templates from "core/templates";
 
 const SELECTORS = {
     DELETE_ROW: '[data-action="deleterow"]',
+    ID_ROW: 'data-rowid',
+    COURSE_ID: 'data-courseid',
+    ID_TEMPLATE: 'tool_carcastc_rows_list',
 };
 
 /**
  * Display confirmation dialogue on delete row
  *
  * @param {Object} element
+ * @param {Object} reloadElement to reload after template render
  */
-const confirmDelete = (element) => {
+const confirmDelete = (element, reloadElement) => {
     const pendingPromise = new Pending('tool_carcastc/carcastc:confirmDelete');
     getStrings([
         {'key': 'confirm'},
@@ -44,20 +50,50 @@ const confirmDelete = (element) => {
     ])
         .then(strings => {
             return Notification.confirm(strings[0], strings[1], strings[2], strings[3], function() {
-                window.location.href = element.href;
+                const idRow = element.getAttribute(SELECTORS.ID_ROW);
+                const courseid = element.getAttribute(SELECTORS.COURSE_ID);
+                const pendingPromiseDelete = new Pending('tool_carcastc/carcastc:requestWsDelete');
+                const requests = [
+                    { methodname: 'tool_carcastc_delete_row', args: {id: idRow} },
+                    { methodname: 'tool_carcastc_display_rows', args: {courseid: courseid} }
+                ];
+                requestWs(requests)[1].then(response => {
+                    if (response.result) {
+                        Templates.render('tool_carcastc/rows_list', response).then(function(html, js) {
+                            Templates.replaceNodeContents(reloadElement, html, js);
+                        });
+                    }
+                    return pendingPromiseDelete.resolve();
+                }).catch(Notification.exception);
             });
         })
         .then(pendingPromise.resolve)
         .catch(Notification.exception);
 };
 
+/**
+ * Handle ajax requests.
+ *
+ * @method requestWs
+ * @param {{any}} requests The method.
+ * @return {promise} Resolved with ajax request
+ */
+const requestWs = (requests) => {
+    return Ajax.call(requests);
+};
 
+/**
+ * Method called when the confirmation delete event occur
+ *
+ * @method init
+ */
 export const init = () => {
-    document.addEventListener('click', e => {
-        const triggerElement = e.target.closest(SELECTORS.DELETE_ROW);
+    document.addEventListener('click', event => {
+        const triggerElement = event.target.closest(SELECTORS.DELETE_ROW);
+        const reloadElement = document.getElementById(SELECTORS.ID_TEMPLATE);
         if (triggerElement) {
-            e.preventDefault();
-            confirmDelete(triggerElement);
+            event.preventDefault();
+            confirmDelete(triggerElement, reloadElement);
         }
     });
 };
