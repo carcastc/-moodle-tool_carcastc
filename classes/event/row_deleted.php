@@ -39,7 +39,8 @@ use core\event\base;
 class row_deleted extends base {
 
     /**
-     * @inheritDoc
+     * Set initial config for deleted event.
+     * @return void
      */
     protected function init() {
         $this->data['objecttable'] = 'tool_carcastc';

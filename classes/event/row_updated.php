@@ -39,7 +39,8 @@ use core\event\base;
 class row_updated extends base {
 
     /**
-     * @inheritDoc
+     * Set initial config for updated event.
+     * @return void
      */
     protected function init() {
         $this->data['objecttable'] = 'tool_carcastc';
