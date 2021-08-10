@@ -48,27 +48,26 @@ const confirmDelete = (element, reloadElement) => {
         {'key': 'yes'},
         {'key': 'no'},
     ])
-        .then(strings => {
-            return Notification.confirm(strings[0], strings[1], strings[2], strings[3], function() {
-                const idRow = element.getAttribute(SELECTORS.ID_ROW);
-                const courseid = element.getAttribute(SELECTORS.COURSE_ID);
-                const pendingPromiseDelete = new Pending('tool_carcastc/carcastc:requestWsDelete');
-                const requests = [
-                    { methodname: 'tool_carcastc_delete_row', args: {id: idRow} },
-                    { methodname: 'tool_carcastc_display_rows', args: {courseid: courseid} }
-                ];
-                requestWs(requests)[1].then(response => {
-                    if (response.result) {
-                        Templates.render('tool_carcastc/rows_list', response).then(function(html, js) {
-                            Templates.replaceNodeContents(reloadElement, html, js);
-                        });
-                    }
-                    return pendingPromiseDelete.resolve();
-                }).catch(Notification.exception);
-            });
-        })
-        .then(pendingPromise.resolve)
-        .catch(Notification.exception);
+    .then(strings => {
+        return Notification.confirm(strings[0], strings[1], strings[2], strings[3], function() {
+            const pendingPromiseDelete = new Pending('tool_carcastc/carcastc:requestWsDelete');
+            const idRow = element.getAttribute(SELECTORS.ID_ROW);
+            const courseid = element.getAttribute(SELECTORS.COURSE_ID);
+            const requests = [
+                { methodname: 'tool_carcastc_delete_row', args: {id: idRow} },
+                { methodname: 'tool_carcastc_display_rows', args: {courseid: courseid} }
+            ];
+            requestWs(requests)[1]
+            .then(response => Templates.render('tool_carcastc/rows_list', response))
+            .then((html) => {
+                reloadElement.innerHTML = html.toString();
+            })
+            .then(pendingPromiseDelete.resolve)
+            .catch(Notification.exception);
+        });
+    })
+    .then(pendingPromise.resolve)
+    .catch(Notification.exception);
 };
 
 /**

@@ -85,7 +85,7 @@ class tool_carcastc_tabledata extends \table_sql {
 
         $this->pageable(false);
         $this->collapsible(false);
-        $this->sortable(false);
+        $this->sortable(true, 'timecreated', SORT_DESC);
         $this->is_downloadable(false);
 
         $this->define_baseurl($PAGE->url);
@@ -235,7 +235,8 @@ class tool_carcastc_tabledata extends \table_sql {
                 tc.description, tc.descriptionformat, tc.priority, tc.timecreated, tc.timemodified
                 FROM {tool_carcastc} tc
                 JOIN {course} c ON c.id = tc.courseid
-                WHERE tc.courseid = ? ";
+                WHERE tc.courseid = ?
+                ORDER BY {$this->get_sql_sort()}";
 
         return $DB->get_records_sql($sql, [$this->courseid]);
     }
